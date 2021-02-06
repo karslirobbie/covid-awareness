@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply overflow-x-hidden;
+    scroll-behavior: smooth;
+  }
+
+  @font-face {
+    font-family: Aileron;
+    font-weight: Bold;
+    src: url(../assets/fonts/Aileron-Bold.otf);
+  }
+
+  @font-face {
+    font-family: Aileron;
+    font-weight: Light;
+    src: url(../assets/fonts/Aileron-Light.otf);
+  }
+
+  @font-face {
+    font-family: Aileron;
+    font-weight: Normal;
+    src: url(../assets/fonts/Aileron-Regular.otf);
+  }
+
+  @font-face {
+    font-family: Aileron;
+    font-weight: Thin;
+    src: url(../assets/fonts/Aileron-Thin.otf);
+  }
+}

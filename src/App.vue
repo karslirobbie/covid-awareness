@@ -1,28 +1,51 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
-</template>
 
+  <div
+    class="h-screen w-screen"
+    id="app"
+  >
+
+    <HeroSection />
+    <WorldMap />
+
+    <Body />
+    <Graph />
+    <WhiteBody />
+    <BlackBody />
+    <Apart />
+    <LastPage />
+
+  </div>
+
+</template>
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import Body from './pages/Body'
+import Apart from './pages/Apart'
+import Graph from './pages/Graph'
+import animation from './animation'
+import LastPage from './pages/LastPage'
+import WorldMap from './pages/WorldMap'
+import WhiteBody from './pages/WhiteBody'
+import BlackBody from './pages/BlackBody'
+import HeroSection from './pages/HeroSection'
 
 export default {
-  name: 'App',
+  name: "App",
+
   components: {
-    HelloWorld
+    Body,
+    Apart,
+    Graph,
+    LastPage,
+    WorldMap,
+    WhiteBody,
+    BlackBody,
+    HeroSection,
+  },
+
+  mounted () {
+    animation()
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

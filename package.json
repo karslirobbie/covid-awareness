@@ -8,12 +8,27 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@svg-maps/world": "^1.0.1",
+    "@tailwindcss/postcss7-compat": "^2.0.2",
+    "autoprefixer": "^9.8.6",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "gsap": "^3.6.0",
+    "postcss": "^7.0.35",
+    "svg-pan-zoom": "^3.6.1",
+    "svgmap": "^1.6.0",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
+    "vue": "^2.6.11",
+    "vue-axios": "^3.2.4",
+    "vue-router": "^3.5.1",
+    "vue-svg-map": "^1.2.0",
+    "vue-world-map": "^0.1.1",
+    "world-map-vue": "^0.2.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "^4.5.11",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
