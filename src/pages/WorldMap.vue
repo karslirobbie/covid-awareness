@@ -29,36 +29,42 @@
     </div>
 
     <!-- world map -->
-    <div class="map-body h-full">
+    <div class="map-body h-5/6 xl:h-4/5">
       <WorldMapVue
-        :country-data="{ US: 100000, CA: 200 }"
+        :country-data="mapData"
         :countryColors=false
         :showOverlay=showMapOverlay
         country-stroke-color="white"
         lowColor="#F1BEBE"
-        highColor="#E67D7F"
+        highColor="#E03131"
         default-country-fill-color="#E2E2E2"
-        @click="onClickMapCountry"
+        @mouseenter="onMouseEnterMapCountry"
+        @mouseleave="onMouseLeaveMapCountry"
       >
         <template v-slot:overlay>
-          <p>{{ selectedCountry }}</p>
+          <div class="w-full h-full text-xs text-center leading-5">
+            <p class="font-bold text-sm pb-2">{{ selectedCountry }} </p>
+            <p>Confirmed: {{ countryConfirmed }}</p>
+            <p>Recovered: {{ countryRecovered }} </p>
+            <p>Deaths: {{ countryDeaths }}</p>
+
+          </div>
         </template>
       </WorldMapVue>
     </div>
-
     <!-- footer -->
-    <div class=" flex items-center justify-around w-full text-xs md:text-sm font-normal sm:font-semibold h-14 pt-5 mb-5 sm:mb-10 sm:h-20 px-6 sm:px-10 text-center">
+    <div class="flex items-center justify-around w-full text-xs md:text-sm font-normal sm:font-semibold h-14 pt-5 mb-5 sm:mb-10 sm:h-20 px-6 sm:px-10 text-center">
       <div class="map-footer">
         <p>Active Cases</p>
-        <p>100,000,000</p>
+        <p>{{ globalConfirmedCases }} </p>
       </div>
       <div class=" map-footer">
         <p>Deaths</p>
-        <p>100,000,000</p>
+        <p>{{ globalDeaths }}</p>
       </div>
       <div class="map-footer">
-        <p>Mortality Rate</p>
-        <p>2%</p>
+        <p>Recovered</p>
+        <p>{{ globalRecovered }}</p>
       </div>
     </div>
   </div>
@@ -66,10 +72,14 @@
 </template>
 <script>
 import WorldMapVue from 'world-map-vue'
+import { thousandFormat } from '../utility'
 
+const iso = require('iso-3166-1');
 
 export default {
   name: "WorldMap",
+  props: ["allData", "globalConfirmedCases", "globalDeaths", "globalRecovered", "mapData"],
+
   components: {
     WorldMapVue
   },
@@ -78,21 +88,29 @@ export default {
     return {
       showMapOverlay: false,
       selectedCountry: '',
+      countryDeaths: '',
+      countryRecovered: '',
+      countryConfirmed: '',
+      globalData: {}
     }
   },
 
   methods: {
-
     onMouseEnterMapCountry (countryCode) {
       this.showMapOverlay = true
-      this.selectedCountry = countryCode
+      const { country } = iso.whereAlpha2(countryCode);
+      this.selectedCountry = country;
+      const { [country]: countryData } = this.allData;
+      const { deaths, recovered, confirmed } = countryData.All
+      this.countryDeaths = thousandFormat(deaths)
+      this.countryRecovered = thousandFormat(recovered)
+      this.countryConfirmed = confirmed
     },
+
     onMouseLeaveMapCountry () {
       this.showMapOverlay = false
     },
-    onClickMapCountry (data) {
-      console.log('Click Country', data)
-    },
+
   },
 
 }

@@ -9,7 +9,7 @@
     </div>
     <div class="flex p-10 flex-col  text-center self-center  md:h-1/3">
       <p class="hero-tag font-bold text-lg md:text-3xl lg:text-4xl sm:mt-20">
-        <span class="sm:block ">There's 190,090,00 reported</span>
+        <span class="sm:block ">There's {{ globalConfirmedCases }} reported</span>
         <span> covid-19 cases around the world.</span>
       </p>
       <button
@@ -46,40 +46,25 @@
 <script>
 
 import Navigation from '../components/Navigation'
-// import { getAllCountriesData } from '../service'
+
 
 export default {
   name: "HeroSection",
+
+  props: ['globalConfirmedCases'],
 
   components: {
     Navigation,
 
   },
 
-  data () {
-    return {
-      allCountriesData: ''
-    }
-  },
-
-  filters: {
-    thousandFormat (num) {
-      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-    }
-  },
-
   methods: {
-    // getAllCountriesData,
     scrollDown () {
       document.querySelector('#map').scrollIntoView({
         behavior: 'smooth'
       });
     }
   },
-
-  mounted () {
-    // this.allCountriesData = await getAllCountriesData()
-  }
 
 }
 
