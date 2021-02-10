@@ -5,20 +5,17 @@
     id="app"
   >
 
-    <HeroSection :globalConfirmedCases=globalConfirmedCases />
+    <HeroSection :global="global.confirmed" />
 
     <WorldMap
-      :allData=allCountriesData
-      :globalDeaths=globalDeaths
-      :globalRecovered=globalRecovered
-      :globalConfirmedCases=globalConfirmedCases
-      :mapData=globalData
+      :global="global"
+      :mapData="map"
     />
 
     <Body />
     <Graph />
-    <WhiteBody />
-    <BlackBody />
+    <WhiteBody :countries="whiteCountries" />
+    <BlackBody :countries="blackCountries" />
     <Apart />
     <LastPage />
 
@@ -36,8 +33,7 @@ import WorldMap from './pages/WorldMap'
 import WhiteBody from './pages/WhiteBody'
 import BlackBody from './pages/BlackBody'
 import HeroSection from './pages/HeroSection'
-import { getAllCountriesData } from './service'
-import { thousandFormat } from './utility'
+import { countriesData } from './data'
 
 export default {
   name: "App",
@@ -55,31 +51,44 @@ export default {
 
   data () {
     return {
-      allCountriesData: null,
-      globalConfirmedCases: '204,970,999',
-      globalRecovered: '',
-      globalDeaths: '',
-      globalData: {}
-
+      map: {},
+      global: {},
+      countriesData,
+      allAbbreviation: {},
+      whiteCountries: {},
+      blackCountries: {}
     }
   },
 
   methods: {
-    getAllCountriesData,
-    thousandFormat
+    async fetchAllData () {
+      await countriesData.getAllData()
+      this.global = await countriesData.getGlobalData()
+      this.allAbbreviation = await countriesData.getMapData()
+      this.map = this.getAllConfirmed()
+      this.getCountryTags()
+    },
+
+    getCountryTags () {
+      this.whiteCountries = countriesData.getWhiteCountry()
+      this.blackCountries = countriesData.getBlackCountry()
+    },
+
+    getAllConfirmed () {
+      const map = {}
+      Object.entries(this.allAbbreviation)
+        .map(country => {
+          const { confirmed = "Not Available" } = country[1];
+          map[country[0]] = confirmed
+        })
+
+      return map
+    }
   },
 
-  async created () {
-    this.allCountriesData = await getAllCountriesData();
-    const { confirmed, recovered, deaths } = this.allCountriesData.Global.All;
-    this.globalConfirmedCases = this.thousandFormat(confirmed);
-    this.globalRecovered = this.thousandFormat(recovered);
-    this.globalDeaths = this.thousandFormat(deaths);
-    Object.entries(this.allCountriesData)
-      .map((country) => {
-        const { abbreviation = "NAN" } = country[1].All;
-        this.globalData[abbreviation] = country[1].All.confirmed
-      })
+  created () {
+    this.fetchAllData()
+
   },
 
   mounted () {

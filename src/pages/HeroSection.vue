@@ -9,15 +9,16 @@
     </div>
     <div class="flex p-10 flex-col  text-center self-center  md:h-1/3">
       <p class="hero-tag font-bold text-lg md:text-3xl lg:text-4xl sm:mt-20">
-        <span class="sm:block ">There's {{ globalConfirmedCases }} reported</span>
+        <span class="sm:block ">There's {{ global }} reported</span>
         <span> covid-19 cases around the world.</span>
       </p>
-      <button
-        @click="$router.push({name:'WorldMap'})"
-        class="hero-tag tracking-widest bg-red mt-6 text-xs md:text-md px-3 md:px-8 py-3 md:py-4 self-center md:mt-10"
+      <a
+        href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public"
+        target="_blank"
+        class="hero-tag  tracking-widest bg-red mt-6 text-xs md:text-md px-3 md:px-8 py-3 md:py-4 self-center md:mt-10"
       >
         Read WHO Advice
-      </button>
+      </a>
     </div>
     <div class="flex justify-center items-end pb-14 h-full">
       <div
@@ -47,11 +48,9 @@
 
 import Navigation from '../components/Navigation'
 
-
 export default {
   name: "HeroSection",
-
-  props: ['globalConfirmedCases'],
+  props: ["global"],
 
   components: {
     Navigation,
@@ -63,7 +62,7 @@ export default {
       document.querySelector('#map').scrollIntoView({
         behavior: 'smooth'
       });
-    }
+    },
   },
 
 }

@@ -11,9 +11,13 @@
           <span class="last-tag md:pt-5 block text-sm">Protect yourself, protect your family</span>
           <span class="last-tag text-sm">We will celebrate life, when the pandemic ends.</span>
         </p>
-        <button class="last-tag lg:self-start lg:justify-center tracking-widest bg-red mt-2 text-xs md:text-md px-3 md:px-8 py-3 md:py-4 self-center md:mt-10">
+        <a
+          href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public"
+          target="_blank"
+          class="last-tag lg:self-start lg:justify-center tracking-widest bg-red mt-2 text-xs md:text-md px-3 md:px-8 py-3 md:py-4 self-center md:mt-10"
+        >
           Read WHO Advice
-        </button>
+        </a>
       </div>
     </div>
     <div class="flex h-1/6 bg-dark justify-around items-center">

@@ -12,9 +12,14 @@
           <span class="sm:block">Staying apart is staying safe.</span>
 
         </p>
-        <button class="apart-tag tracking-widest bg-red mt-6 text-xs md:text-md px-3 md:px-8 py-3 md:py-4 self-center md:mt-10">
+
+        <a
+          href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public"
+          target="_blank"
+          class="apart-tag tracking-widest bg-red mt-6 text-xs md:text-md px-3 md:px-8 py-3 md:py-4 self-center md:mt-10"
+        >
           Read WHO Advice
-        </button>
+        </a>
       </div>
 
     </div>

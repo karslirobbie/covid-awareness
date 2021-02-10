@@ -17,14 +17,11 @@
         </div>
         <div class="map-tag ">
           <div class="w-6 sm:w-12 bg-low h-3 rounded-md "></div>
-          <p class="pt-1">Low</p>
+          <p class="pt-1">Unavaible</p>
         </div>
       </div>
       <div class="map-tag flex flex-1 h-full justify-end items-center text-xs text-center">
-        <input
-          type="text"
-          placeholder="Search Country"
-        >
+
       </div>
     </div>
 
@@ -38,33 +35,33 @@
         lowColor="#F1BEBE"
         highColor="#E03131"
         default-country-fill-color="#E2E2E2"
-        @mouseenter="onMouseEnterMapCountry"
-        @mouseleave="onMouseLeaveMapCountry"
+        @mouseenter="onMouseEnterCountry"
+        @mouseleave="onMouseLeaveCountry"
       >
         <template v-slot:overlay>
-          <div class="w-full h-full text-xs text-center leading-5">
-            <p class="font-bold text-sm pb-2">{{ selectedCountry }} </p>
-            <p>Confirmed: {{ countryConfirmed }}</p>
-            <p>Recovered: {{ countryRecovered }} </p>
-            <p>Deaths: {{ countryDeaths }}</p>
+          <div class="w-full h-full text-xs sm:text-base text-center leading-6">
+            <p class="font-bold  pb-2">{{ selected}} </p>
+            <p>Confirmed: {{ selectedCountry.confirmed }}</p>
+            <p>Recovered: {{ selectedCountry.recovered }} </p>
+            <p>Deaths: {{ selectedCountry.deaths }}</p>
 
           </div>
         </template>
       </WorldMapVue>
     </div>
     <!-- footer -->
-    <div class="flex items-center justify-around w-full text-xs md:text-sm font-normal sm:font-semibold h-14 pt-5 mb-5 sm:mb-10 sm:h-20 px-6 sm:px-10 text-center">
+    <div class="flex items-center justify-around w-full text-xs md:text-sm font-normal sm:font-medium h-14 mb-5 sm:mb-16 sm:h-20 px-6 sm:px-10 text-center">
       <div class="map-footer">
         <p>Active Cases</p>
-        <p>{{ globalConfirmedCases }} </p>
+        <p>{{ global.confirmed }} </p>
       </div>
       <div class=" map-footer">
         <p>Deaths</p>
-        <p>{{ globalDeaths }}</p>
+        <p>{{ global.deaths }}</p>
       </div>
       <div class="map-footer">
         <p>Recovered</p>
-        <p>{{ globalRecovered }}</p>
+        <p>{{ global.recovered }}</p>
       </div>
     </div>
   </div>
@@ -72,13 +69,13 @@
 </template>
 <script>
 import WorldMapVue from 'world-map-vue'
-import { thousandFormat } from '../utility'
-
+import { countriesData } from '../data'
 const iso = require('iso-3166-1');
 
 export default {
   name: "WorldMap",
-  props: ["allData", "globalConfirmedCases", "globalDeaths", "globalRecovered", "mapData"],
+
+  props: ["global", "mapData"],
 
   components: {
     WorldMapVue
@@ -87,30 +84,23 @@ export default {
   data () {
     return {
       showMapOverlay: false,
-      selectedCountry: '',
-      countryDeaths: '',
-      countryRecovered: '',
-      countryConfirmed: '',
-      globalData: {}
+      selected: '',
+      selectedCountry: {},
     }
   },
 
   methods: {
-    onMouseEnterMapCountry (countryCode) {
+    onMouseEnterCountry (countryCode) {
       this.showMapOverlay = true
-      const { country } = iso.whereAlpha2(countryCode);
-      this.selectedCountry = country;
-      const { [country]: countryData } = this.allData;
-      const { deaths, recovered, confirmed } = countryData.All
-      this.countryDeaths = thousandFormat(deaths)
-      this.countryRecovered = thousandFormat(recovered)
-      this.countryConfirmed = confirmed
+      this.selected = iso.whereAlpha2(countryCode).country;
+      this.selectedCountry = countriesData.getSelectedCountry(countryCode)
+      document.getElementById(countryCode).style.stroke = 'red'
     },
 
-    onMouseLeaveMapCountry () {
+    onMouseLeaveCountry (countryCode) {
+      document.getElementById(countryCode).style.stroke = 'white'
       this.showMapOverlay = false
-    },
-
+    }
   },
 
 }
