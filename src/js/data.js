@@ -1,4 +1,4 @@
-import { getAllCountriesData } from './service'
+import { getAllCountriesData, getDeathHistory, getCaseHistory } from './service'
 import { thousandFormat } from './utility'
 
 export const countriesData = {
@@ -66,5 +66,33 @@ export const countriesData = {
       au: this.getSelectedCountry('AU').confirmed,
       jp: this.getSelectedCountry('JP').confirmed
     }
+  }
+}
+
+export class History {
+  static async getDeaths () {
+    const deaths = await getDeathHistory()
+    return deaths;
+  }
+
+  static async getCases () {
+    const cases = await getCaseHistory()
+    return cases;
+  }
+
+  static async getGraphData () {
+    const deaths = await History.getDeaths()
+    const cases = await History.getCases()
+    let data = []
+
+    Object.keys(cases).map(confirmed => {
+      data.push({
+        date: confirmed,
+        confirmed: cases[confirmed],
+        deaths: deaths[confirmed]
+      })
+    })
+
+    return data;
   }
 }

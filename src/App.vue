@@ -13,7 +13,7 @@
     />
 
     <Body />
-    <Graph />
+    <Graph :graphData="lineData" />
     <WhiteBody :countries="whiteCountries" />
     <BlackBody :countries="blackCountries" />
     <Apart />
@@ -27,13 +27,13 @@
 import Body from './pages/Body'
 import Apart from './pages/Apart'
 import Graph from './pages/Graph'
-import animation from './animation'
+import animation from './js/animation'
 import LastPage from './pages/LastPage'
 import WorldMap from './pages/WorldMap'
 import WhiteBody from './pages/WhiteBody'
 import BlackBody from './pages/BlackBody'
 import HeroSection from './pages/HeroSection'
-import { countriesData } from './data'
+import { countriesData, History } from './js/data'
 
 export default {
   name: "App",
@@ -56,7 +56,11 @@ export default {
       countriesData,
       allAbbreviation: {},
       whiteCountries: {},
-      blackCountries: {}
+      blackCountries: {},
+      lineData: [
+        { date: '2013', confirmed: 100, deaths: 700 },
+        { date: '2014', confirmed: 200, deaths: 100 },
+        { date: '2015', confirmed: 100, deaths: 100 }]
     }
   },
 
@@ -67,6 +71,7 @@ export default {
       this.allAbbreviation = await countriesData.getMapData()
       this.map = this.getAllConfirmed()
       this.getCountryTags()
+      this.lineData = await History.getGraphData()
     },
 
     getCountryTags () {

@@ -69,7 +69,7 @@
 </template>
 <script>
 import WorldMapVue from 'world-map-vue'
-import { countriesData } from '../data'
+import { countriesData } from '../js/data'
 const iso = require('iso-3166-1');
 
 export default {
